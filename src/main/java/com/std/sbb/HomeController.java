@@ -19,4 +19,20 @@ public class HomeController {
         return "안녕하세요";
     }
 
+
+    //    http://localhost:8080/home/main2
+    //    응답 : 반갑습니다.
+    @GetMapping("/home/main2")
+    @ResponseBody
+    public String showMain2() {
+        return "반갑습니다.";
+    }
+
+    //    http://localhost:8080/home/main3
+    //    즐거웠습니다.
+    @GetMapping("/home/main3")
+    @ResponseBody
+    public String showMain3() {
+        return "즐거웠습니다.";
+    }
 }

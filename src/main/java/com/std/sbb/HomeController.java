@@ -3,6 +3,7 @@ package com.std.sbb;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +20,11 @@ import java.util.Map;
 @Controller
 public class HomeController {
     private int number;
+    private List<Person> people;
 
-    HomeController () {
+    HomeController() {
         number = -1;
+        people = new ArrayList<>();
     }
 
     // @GetMapping("/home/main") 의 의미
@@ -69,31 +72,32 @@ public class HomeController {
 
     @GetMapping("/home/minus")
     @ResponseBody
-    public int showMinus(int a,  int b) {
+    public int showMinus(int a, int b) {
         return a - b;
     }
 
     @GetMapping("/home/multiply")
     @ResponseBody
-    public int showMultiply(int a,  int b) {
+    public int showMultiply(int a, int b) {
         return a * b;
     }
 
     @GetMapping("/home/divide")
     @ResponseBody
-    public int showDivide(int a,  int b) {
+    public int showDivide(int a, int b) {
         return a / b;
     }
 
+    //
     @GetMapping("/home/returnBoolean")
     @ResponseBody
-    public boolean returnBoolean () {
+    public boolean returnBoolean() {
         return true;
     }
 
     @GetMapping("/home/returnDouble")
     @ResponseBody
-    public double returnDouble () {
+    public double returnDouble() {
         return Math.PI;
     }
 
@@ -204,7 +208,49 @@ public class HomeController {
 
         return list;
     }
+
+    @GetMapping("/home/addPerson")
+    @ResponseBody
+    public String addPerson (String name, int age) {
+         Person p  =  new Person(name, age);
+
+        System.out.println(p);
+        people.add(p);
+
+        return  p.getId() + "번 사람이 추가되었습니다.";
+//        return "%d번 사람이 추가되었습니다.".formatted(p.getId());
+    }
+
+    @GetMapping("/home/people")
+    @ResponseBody
+    public List<Person> showPeople () {
+        return people;
+    }
+
 }
+
+@AllArgsConstructor
+@Getter
+@ToString
+class Person {
+    private  static int lastId;
+    private final int id;
+    private final String name;
+    private final int age;
+
+    static {
+        lastId = 0;
+    }
+
+    Person (String name, int age) {
+//         this.id = lastId++;
+//         this.name = name;
+//         this.age = age;
+
+        this(++lastId, name, age);
+    }
+}
+
 
 class Car {
     private final int id;

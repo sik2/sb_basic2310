@@ -2,6 +2,7 @@ package com.std.sbb;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 // @Controller 의 의미
@@ -46,5 +47,33 @@ public class HomeController {
     public int showIncrease() {
         number++;
         return number;
+    }
+
+    // @RequestParam 의 의미
+    // 개발자가 스프링부트에게 말한다.
+    // int a 는 쿼리스트링에서 a 파라미터의 값을 얻은 후 정수화 한 값이어야 한다.
+    // @RequestParam 는 생략가능
+    @GetMapping("/home/plus")
+    @ResponseBody
+    public int showPlus(@RequestParam(defaultValue = "0") int a, @RequestParam int b) {
+        return a + b;
+    }
+
+    @GetMapping("/home/minus")
+    @ResponseBody
+    public int showMinus(int a,  int b) {
+        return a - b;
+    }
+
+    @GetMapping("/home/multiply")
+    @ResponseBody
+    public int showMultiply(int a,  int b) {
+        return a * b;
+    }
+
+    @GetMapping("/home/divide")
+    @ResponseBody
+    public int shoDivide(int a,  int b) {
+        return a / b;
     }
 }

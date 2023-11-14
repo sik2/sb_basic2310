@@ -34,6 +34,18 @@ public class PersonController {
     public List<Person> people () {
         return people;
     }
+
+    @GetMapping("/home/removePerson")
+    @ResponseBody
+    public String removePerson(int id) {
+        boolean removed = people.removeIf(person -> person.getId() == id);
+
+        if (removed == false) {
+            return id + "번 사람이 존재하지 않습니다.";
+        }
+
+        return id + "번 사람이 삭제 되었습니다.";
+    }
 }
 
 

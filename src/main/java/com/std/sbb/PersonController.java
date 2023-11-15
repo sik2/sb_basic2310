@@ -2,6 +2,7 @@ package com.std.sbb;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +47,25 @@ public class PersonController {
 
         return id + "번 사람이 삭제 되었습니다.";
     }
+
+    @GetMapping("/home/modifyPerson")
+    @ResponseBody
+    public String modifyPerson(int id, String name, int age) {
+        Person foundPerson = people
+                        .stream()
+                        .filter(p -> p.getId() == id)
+                        .findFirst()
+                        .orElse(null);
+
+        if (foundPerson == null) {
+            return  id + "번 사람이 존재하지 않습니다.";
+        }
+
+        foundPerson.setAge(age);
+        foundPerson.setName(name);
+
+        return  id + "번 사람이 수정 되었습니다.";
+    }
 }
 
 
@@ -54,8 +74,10 @@ public class PersonController {
 class Person {
     private static int lastId;
     private final int id;
-    private final int age;
-    private final String name;
+    @Setter
+    private int age;
+    @Setter
+    private String name;
 
     static {
         lastId = 0;
